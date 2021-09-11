@@ -18,7 +18,17 @@ from django.urls import path
 from dashboardAPI import views
 from rest_framework.authtoken.views import obtain_auth_token
 
+from rest_framework.routers import DefaultRouter
+from dashboardAPI.views import CamposLogViewSet
+
 urlpatterns = [
     path('hello/', views.HelloView.as_view(), name='hello'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
+
+app_name = 'api'
+ 
+router = DefaultRouter(trailing_slash=False)
+router.register(r'campos_log', CamposLogViewSet)
+
+urlpatterns = urlpatterns + router.urls
