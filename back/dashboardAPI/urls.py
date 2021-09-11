@@ -22,6 +22,7 @@ from rest_framework.routers import DefaultRouter
 
 from dashboardAPI.views import CamposLogViewSet
 from dashboardAPI.views import TipoEquiposViewSet
+from dashboardAPI.views import EquiposViewSet
 
 urlpatterns = [
     path('hello/', views.HelloView.as_view(), name='hello'),
@@ -33,6 +34,7 @@ app_name = 'api'
 router = DefaultRouter(trailing_slash=False)
 
 router.register(r'campos_log', CamposLogViewSet)
-router.register(r'equipos', TipoEquiposViewSet)
+router.register(r'tipo_equipo', TipoEquiposViewSet)
+router.register(r'equipo', EquiposViewSet)
 
 urlpatterns = urlpatterns + router.urls
