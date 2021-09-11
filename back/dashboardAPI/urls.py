@@ -19,7 +19,9 @@ from dashboardAPI import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 from rest_framework.routers import DefaultRouter
+
 from dashboardAPI.views import CamposLogViewSet
+from dashboardAPI.views import TipoEquiposViewSet
 
 urlpatterns = [
     path('hello/', views.HelloView.as_view(), name='hello'),
@@ -29,6 +31,8 @@ urlpatterns = [
 app_name = 'api'
  
 router = DefaultRouter(trailing_slash=False)
+
 router.register(r'campos_log', CamposLogViewSet)
+router.register(r'equipos', TipoEquiposViewSet)
 
 urlpatterns = urlpatterns + router.urls

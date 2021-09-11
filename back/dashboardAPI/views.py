@@ -3,8 +3,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from dashboardAPI.serializers import CamposLogSerializer
+from dashboardAPI.serializers import TipoEquiposSerializer
+
 from rest_framework import viewsets, permissions
+
 from dashboardAPI.models import CamposLog
+from dashboardAPI.models import TipoEquipos
 
 class HelloView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -18,3 +22,7 @@ class CamposLogViewSet(viewsets.ModelViewSet):
     serializer_class = CamposLogSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class TipoEquiposViewSet(viewsets.ModelViewSet):
+    queryset = TipoEquipos.objects.all()
+    serializer_class = TipoEquiposSerializer
+    permission_classes = [permissions.IsAuthenticated]
