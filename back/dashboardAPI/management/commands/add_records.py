@@ -7,4 +7,11 @@ class Command(BaseCommand):
         parser.add_argument('log_file', type=str, help='Ubicación del archivo de Log')
 
     def handle(self, *args, **kwargs):
-        self.stdout.write("Funcionalidad aun no implementada")
+        filePath = kwargs['log_file']
+        filePath = filePath.replace('log_file=','')
+        
+        file   = open(filePath, "r", encoding='utf-8')
+        lineas = file.readlines()
+        for linea in lineas:
+            print (linea)
+        file.close()  
