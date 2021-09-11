@@ -14,3 +14,6 @@
 4. Configurar parametros de base de datos (en archivo back/dashBoardAPI/settings.py
 5. Ejecutar migraciones de la DB (en directorio back): python3 manage.py migrate
 6. Crear el usuario administrador con (en directorio back, el email puede ser ficticio): python3 manage.py createsuperuser --username username --email email 
+
+## Carga de archivos de logs
+Para la carga de logs, se prevee un comando (en el proyecto Django) que deberá ser ejecutado cada vez que se reciba un archivo de logs, dicho comando es: python3 manage.py add_records log_file="path/archivo/logs", sugiero agregarlo al final del update.sh
