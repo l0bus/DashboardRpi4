@@ -14,3 +14,7 @@ class Equipos(models.Model):
     descripcion = models.CharField(max_length=255)
     tipo = models.ForeignKey(TipoEquipos, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField()
+
+class LogEquipoReg(models.Model):
+    id_equipo = models.ForeignKey(Equipos, on_delete=models.DO_NOTHING)
+    fecha_registro = models.DateTimeField()
