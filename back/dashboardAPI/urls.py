@@ -24,6 +24,7 @@ from dashboardAPI.views import CamposLogViewSet
 from dashboardAPI.views import TipoEquiposViewSet
 from dashboardAPI.views import EquiposViewSet
 from dashboardAPI.views import LogEquipoRegViewSet
+from dashboardAPI.views import LogEquipoDataViewSet
 
 urlpatterns = [
     path('hello/', views.HelloView.as_view(), name='hello'),
@@ -38,5 +39,6 @@ router.register(r'campos_log', CamposLogViewSet)
 router.register(r'tipo_equipo', TipoEquiposViewSet)
 router.register(r'equipo', EquiposViewSet)
 router.register(r'log_equipo', LogEquipoRegViewSet)
+router.register(r'log_equipo_data', LogEquipoDataViewSet)
 
 urlpatterns = urlpatterns + router.urls

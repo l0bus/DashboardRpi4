@@ -3,6 +3,7 @@ from dashboardAPI.models import CamposLog
 from dashboardAPI.models import TipoEquipos
 from dashboardAPI.models import Equipos
 from dashboardAPI.models import LogEquipoReg
+from dashboardAPI.models import LogEquipoData
 
 class CamposLogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,4 +41,15 @@ class LogEquipoRegSerializer(serializers.ModelSerializer):
             'id',
             'id_equipo',
             'fecha_registro',
+        ]
+
+class LogEquipoDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogEquipoData
+        fields = [
+            'id',
+            'key_id',
+            'value',
+            'id_log_reg',
+            'created_at'
         ]

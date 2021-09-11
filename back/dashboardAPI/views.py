@@ -6,6 +6,7 @@ from dashboardAPI.serializers import CamposLogSerializer
 from dashboardAPI.serializers import TipoEquiposSerializer
 from dashboardAPI.serializers import EquiposSerializer
 from dashboardAPI.serializers import LogEquipoRegSerializer
+from dashboardAPI.serializers import LogEquipoDataSerializer
 
 from rest_framework import viewsets, permissions
 
@@ -13,6 +14,7 @@ from dashboardAPI.models import CamposLog
 from dashboardAPI.models import TipoEquipos
 from dashboardAPI.models import Equipos
 from dashboardAPI.models import LogEquipoReg
+from dashboardAPI.models import LogEquipoData
 
 class HelloView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -39,4 +41,9 @@ class EquiposViewSet(viewsets.ModelViewSet):
 class LogEquipoRegViewSet(viewsets.ModelViewSet):
     queryset = LogEquipoReg.objects.all()
     serializer_class = LogEquipoRegSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class LogEquipoDataViewSet(viewsets.ModelViewSet):
+    queryset = LogEquipoData.objects.all()
+    serializer_class = LogEquipoDataSerializer
     permission_classes = [permissions.IsAuthenticated]
