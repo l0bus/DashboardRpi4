@@ -1,13 +1,13 @@
 # DashboardRpi4
 
 
-##Backend, pre requisitos
+## Backend, pre requisitos
 1. Tener Python3 instalado
 2. Tener MariaDB o MySQL instalado
 3. Tener usuario y base de datos creados
 4. Tener un servidor web para el front (Puede ser Apache o Nginx)
 
-##Backend, puesta en marcha (luego se podrìa agregar todo en un .sh para hacerlo más práctico)
+## Backend, puesta en marcha (luego se podrìa agregar todo en un .sh para hacerlo más práctico)
 1. Instalar python3
 2. Instalar dependencias Django: pip3 install django
 3. Instalar DjangoRestFramework: pip3 install djangorestframework
