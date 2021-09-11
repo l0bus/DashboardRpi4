@@ -2,6 +2,7 @@ from rest_framework import serializers
 from dashboardAPI.models import CamposLog
 from dashboardAPI.models import TipoEquipos
 from dashboardAPI.models import Equipos
+from dashboardAPI.models import LogEquipoReg
 
 class CamposLogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,4 +31,13 @@ class EquiposSerializer(serializers.ModelSerializer):
             'cod',
             'tipo',
             'created_at'
+        ]
+
+class LogEquipoRegSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogEquipoReg
+        fields = [
+            'id',
+            'id_equipo',
+            'fecha_registro',
         ]
