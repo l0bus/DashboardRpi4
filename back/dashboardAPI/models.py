@@ -18,3 +18,9 @@ class Equipos(models.Model):
 class LogEquipoReg(models.Model):
     id_equipo = models.ForeignKey(Equipos, on_delete=models.DO_NOTHING)
     fecha_registro = models.DateTimeField()
+
+class LogEquipoData(models.Model):
+    key_id = models.ForeignKey(CamposLog, on_delete=models.DO_NOTHING)
+    value = models.CharField(max_length=1024)
+    id_log_reg = models.ForeignKey(LogEquipoReg, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField()
