@@ -1,4 +1,3 @@
-from django.db import transaction
 from datetime import datetime
 import re
 
@@ -13,6 +12,7 @@ class DBLogInserter:
     header = []
     fields = {}
     actual_line = 0
+    filePath = ''
 
     def set_header(self, header):
         self.header = header
@@ -73,6 +73,7 @@ class DBLogInserter:
         log_equipo_reg = LogEquipoReg()
         log_equipo_reg.id_equipo = Equipos.objects.get(id = idEquipo)
         log_equipo_reg.fecha_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_equipo_reg.file_path = self.filePath
         log_equipo_reg.save()
         return log_equipo_reg
 
@@ -100,12 +101,13 @@ class DBLogInserter:
             self.insert_log_equipo_data( self.get_campo_log(field_name)[0].id, cell, inser_log_reg )
             count = count + 1
 
-    def insert_log(self, row, actual_line):
+    def insert_log(self, row, actual_line, filePath):
         self.actual_line = actual_line
-
+        self.filePath = filePath
+        
         #Si la linea actual es la cero, corresponde al encabezado
         if (self.actual_line == 0):
             self.set_header(row)
         else:
             self.insert_reg_in_DB(row)
-            
+                  

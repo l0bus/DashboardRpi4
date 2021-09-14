@@ -2,6 +2,8 @@ from django.core.management.base import BaseCommand
 import csv
 from dashboardAPI.components.db_log_inserter import DBLogInserter
 
+from dashboardAPI.models import LogEquipoReg
+
 class Command(BaseCommand):
     help = 'Agrega nuevos registros a la DB, se debe especificar el archivo con los logs'
 
@@ -16,10 +18,15 @@ class Command(BaseCommand):
         filePath = kwargs['log_file']
         filePath = filePath.replace('log_file=','')
         
-        #Se abre el archivo como .CSV (ya que su sintaxis es compatible con dicho formato)
-        with open(filePath, newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=',', quotechar='', quoting=csv.QUOTE_NONE)
-            line_count = 0
-            for row in spamreader:
-                self.db_log_inserted.insert_log(row, line_count)
-                line_count = line_count + 1
+        if ( len( LogEquipoReg.objects.filter( file_path = filePath)) == 0):
+
+            #Se abre el archivo como .CSV (ya que su sintaxis es compatible con dicho formato)
+            with open(filePath, newline='') as csvfile:
+                spamreader = csv.reader(csvfile, delimiter=',', quotechar='', quoting=csv.QUOTE_NONE)
+                line_count = 0
+                for row in spamreader:
+                    self.db_log_inserted.insert_log(row, line_count, filePath)
+                    line_count = line_count + 1
+
+        else:
+            print ("El archivo " + filePath + " fue cargado con anterioridad")
