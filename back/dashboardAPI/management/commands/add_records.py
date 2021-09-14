@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+import csv
 
 class Command(BaseCommand):
     help = 'Agrega nuevos registros a la DB, se debe especificar el archivo con los logs'
@@ -11,7 +12,8 @@ class Command(BaseCommand):
         filePath = filePath.replace('log_file=','')
         
         file   = open(filePath, "r", encoding='utf-8')
-        lineas = file.readlines()
-        for linea in lineas:
-            print (linea)
-        file.close()  
+        
+        with open(filePath, newline='') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=',', quotechar='', quoting=csv.QUOTE_NONE)
+            for row in spamreader:
+                print (row)
