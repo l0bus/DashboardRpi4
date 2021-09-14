@@ -46,7 +46,8 @@ class DBLogInserter:
         equipo.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         equipo.descripcion = 'agregado automaticamente a partir de log'
         equipo.nombre = ''
-        return equipo.save()
+        equipo.save()
+        return equipo
 
     def get_tipo_equipo(self, cod):
         return TipoEquipos.objects.filter(cod = cod)
@@ -60,6 +61,21 @@ class DBLogInserter:
     def get_value_f_row(self, row, key):
         return row[ self.fields[ key ] ]
 
+    def insert_log_equipo_data(self, key_id, value, id_log_reg):
+        log_reg_data = LogEquipoData()
+        log_reg_data.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_reg_data.key_id = CamposLog.objects.get(id = key_id)
+        log_reg_data.value = value
+        log_reg_data.id_log_reg = LogEquipoReg.objects.get(id = id_log_reg)
+        log_reg_data.save()
+
+    def insert_log_equipo_reg(self, idEquipo):
+        log_equipo_reg = LogEquipoReg()
+        log_equipo_reg.id_equipo = Equipos.objects.get(id = idEquipo)
+        log_equipo_reg.fecha_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_equipo_reg.save()
+        return log_equipo_reg
+
     def insert_reg_in_DB(self, row):
         cod_equipo = self.get_value_f_row(row, "ID")
         #Se obtiene el id del tipo de equipo a partir de su còdigo
@@ -71,13 +87,17 @@ class DBLogInserter:
             params = {}
             params["cod"] = cod_equipo
             params["tipo_id"] = id_tipo_equipo
-            self.insert_equipo( params )
+            equipo_id = self.insert_equipo( params ).pk
+        else:
+            equipo_id = equipo[0].id
+
+        #Se agrega un nuevo registro correspondiente a una entrada de log (Se agregarìa un registro en esta tabla por cada registro en el archivo de logs)
+        inser_log_reg = self.insert_log_equipo_reg( equipo_id ).id
 
         count = 0
         for cell in row:
             field_name = self.header[count]
-                
-            #print(self.get_campo_log(field_name)[0].id)
+            self.insert_log_equipo_data( self.get_campo_log(field_name)[0].id, cell, inser_log_reg )
             count = count + 1
 
     def insert_log(self, row, actual_line):
