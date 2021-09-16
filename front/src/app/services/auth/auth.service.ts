@@ -1,0 +1,179 @@
+import { Injectable }              from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router }                  from '@angular/router';
+import { Subject }                 from 'rxjs';
+
+import { Login }           from './models/login';
+import { ConfigService }   from 'src/app/services/config/config.service';
+import { ResetPassword }   from './models/reset-password';
+import { Usuario }         from './models/usuario';
+
+import { AppUIUtilsService }   from 'src/app/services/appUIUtils/app.ui.utils.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  private confGral:any = {};
+  private LastElement:any = {};
+
+  constructor(
+    private  router:      Router,
+    private  http:        HttpClient,
+    private  config:      ConfigService,
+    private  gral:        AppUIUtilsService
+  ) {
+    this.confGral = this.config.getConfigData();
+  }
+
+  login( model:Login ){
+    this.gral.presentLoading();
+    this.http.post(this.confGral['apiBaseUrl'] + this.confGral['loginAction'], model,
+      { headers: new HttpHeaders({ 'Content-Type':  'application/json' }) }).subscribe(
+        data => {
+          this.gral.dismissLoading();
+
+          if ( (data as any).status ){
+            localStorage.setItem( this.confGral['appName']+'token',        (data as any).token );
+            localStorage.setItem( this.confGral['appName']+'role',         (data as any).role );
+            localStorage.setItem( this.confGral['appName']+'role_id',      (data as any).role_id );
+            localStorage.setItem( this.confGral['appName']+'id',           (data as any).id );
+            localStorage.setItem( this.confGral['appName']+'online',       (data as any).online );
+            localStorage.setItem( this.confGral['appName']+'profile_id',       (data as any).profile_id );
+            localStorage.setItem( this.confGral['appName']+'verification_email',(data as any).verification_email );
+            localStorage.setItem( this.confGral['appName']+'logedIn',      JSON.stringify( (data as any).status ) );
+            localStorage.setItem( this.confGral['appName']+'userName',     JSON.stringify( (data as any).username ) );
+            if((data as any).verification_email === 0 || (data as any).verification_email === null){
+              this.router.navigate( [ '/verification-email' ] );
+            }else{
+              this.router.navigate(['/tabs/tabs/search']);
+            }
+          } else {
+            this.gral.showMessage( 'Usuario o contraseña incorrecta.' );
+          }
+        },
+        err =>  {
+          this.gral.dismissLoading();
+          localStorage.setItem( this.confGral['appName']+'logedIn',      JSON.stringify( false ) );
+          localStorage.setItem( this.confGral['appName']+'token',        JSON.stringify( '' ) );
+          localStorage.setItem( this.confGral['appName']+'enterprise_id', JSON.stringify('' ) );
+          localStorage.setItem( this.confGral['appName']+'role',         '' );
+          localStorage.setItem( this.confGral['appName']+'role_id',      '' );
+          localStorage.setItem( this.confGral['appName']+'online',       JSON.stringify( false ));
+          localStorage.setItem( this.confGral['appName']+'id',           JSON.stringify('' ) );
+          localStorage.setItem( this.confGral['appName']+'profile_id',           JSON.stringify('' ) );
+          localStorage.setItem( this.confGral['appName']+'verification_email',JSON.stringify('' ) );
+          localStorage.setItem( this.confGral['appName']+'userName',     JSON.stringify( '' ) );
+          this.gral.showMessage( 'Ha ocurrido un error, por favor reintente más tarde.' );
+        }
+      );
+  }
+
+  toLoginIfNL(){
+    if ( !this.logedIn() ){
+      this.router.navigate(['/login']);
+    } else {
+      this.setMenuLinks();
+    }
+  }
+
+  toLogOut(){
+    localStorage.setItem( this.confGral['appName']+'logedIn',  JSON.stringify( false ) );
+    localStorage.setItem( this.confGral['appName']+'token',    '' );
+    this.router.navigate(['/login']);
+  }
+
+  logedIn(){
+    let lgIn:any = localStorage.getItem( this.confGral['appName']+'logedIn' );
+    if ( lgIn === undefined || lgIn === null ){
+      return false;
+    }
+    return (lgIn === "true");
+  }
+
+  getToken(){
+    return localStorage.getItem( this.confGral['appName']+'token' );
+  }
+
+  getUserName(){
+    let out:any = localStorage.getItem( this.confGral['appName']+'userName' );
+    //se eliminan las dos comillas
+    out = out.replace('"','');
+    out = out.replace('"','');
+    out = out.replace(/\w\S*/g, (w:any) => (w.replace(/^\w/, (c:any) => c.toUpperCase())));
+    return out;
+  }
+
+  getRole(){
+    if ( !this.logedIn() ){
+      return 'notassigned';
+    }
+    return localStorage.getItem( this.confGral['appName']+'role' );
+  }
+
+  getRoleId(){
+    if ( !this.logedIn() ){
+      return 'notassigned';
+    }
+    return localStorage.getItem( this.confGral['appName']+'role_id' );
+  }
+
+  getUserId(){
+    return Number( localStorage.getItem( this.confGral['appName']+'id' ) );
+  }
+
+  getProfileId(){
+    return Number( localStorage.getItem( this.confGral['appName']+'profile_id' ) );
+  }
+
+  getVerificationEmailStatus(){
+    let verification:any = localStorage.getItem( this.confGral['appName']+'verification_email' );
+    if ( verification === 0 || verification === null ){
+      return false;
+    }
+    return (verification === "true");
+  }
+
+  setOnlineStatus( online:any ){
+    localStorage.setItem( this.confGral['appName']+'online', online );
+  }
+
+  getOnlineStatus(){
+    return localStorage.getItem( this.confGral['appName']+'online' );
+  }
+
+  setMenuLinks(){
+
+  }
+
+  public resetPasswordEmailOK:Subject<any> = new Subject();
+  public resetPasswordEmailError:Subject<any> = new Subject();
+  resetPasswordEmail( model:ResetPassword ){
+    this.http.post(this.confGral['apiBaseUrl'] + this.confGral['resetPasswordEmailAction'], model,
+      { headers: new HttpHeaders({ 'Content-Type':  'application/json'}) }).subscribe(
+        data => {
+          this.LastElement = data;
+          this.resetPasswordEmailOK.next(data);
+        },
+        err =>  {
+          this.resetPasswordEmailError.next(err);
+        }
+      );
+  }
+
+  public registerOK:Subject<any> = new Subject();
+  public registerError:Subject<any> = new Subject();
+  register( model:Usuario ){
+    this.http.post(this.confGral['apiBaseUrl'] + this.confGral['registerAction'], model,
+      { headers: new HttpHeaders({ 'Content-Type':  'application/json'}) }).subscribe(
+        data => {
+          this.LastElement = data;
+          this.registerOK.next(data);
+        },
+        err =>  {
+          this.registerError.next(err);
+        }
+      );
+  }
+}
