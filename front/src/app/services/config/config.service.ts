@@ -9,7 +9,7 @@ export class ConfigService {
   public getConfigData(){
     return {
       apiBaseUrl:"https://estadisticas1.api.greenborn.com.ar/",
-      loginAction:"login",
+      loginAction:"api-token-auth",
       appName: "app_estadisticas1_dev_"
     };
   }
