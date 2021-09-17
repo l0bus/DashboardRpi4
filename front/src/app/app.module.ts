@@ -11,6 +11,7 @@ import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equi
 import { MapaEquiposComponent }   from './components/mapa-equipos/mapa-equipos.component';
 
 import { AutenticationModule } from './modules/autentication/autentication.module';
+import { DashboardModule }     from './modules/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AutenticationModule } from './modules/autentication/autentication.modul
     BrowserModule,
     AppRoutingModule,
     AutenticationModule,
+    DashboardModule,
     NgbModule
   ],
   providers: [],

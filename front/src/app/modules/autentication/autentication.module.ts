@@ -5,11 +5,13 @@ import { LoginViewComponent } from './componentes/login-view/login-view.componen
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule }   from '@angular/common/http';
+import { AuthenticationGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginViewComponent
+    component: LoginViewComponent,
+    
   }
 ];
 
@@ -23,6 +25,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [
+    AuthenticationGuard
+  ],
 })
 export class AutenticationModule { }

@@ -4,7 +4,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthenticationGuard  } from 'src/app/modules/autentication/services/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({
