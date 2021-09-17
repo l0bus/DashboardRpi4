@@ -5,16 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent }     from './app.component';
 import { NgbModule }        from '@ng-bootstrap/ng-bootstrap';
 
-import { LoginPageComponent }     from './components/login-page/login-page.component';
 import { TabsDashboardComponent } from './components/tabs-dashboard/tabs-dashboard.component';
 import { GrillaEquiposComponent } from './components/grilla-equipos/grilla-equipos.component';
 import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equipo.component';
 import { MapaEquiposComponent }   from './components/mapa-equipos/mapa-equipos.component';
 
+import { AutenticationModule } from './modules/autentication/autentication.module';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
     TabsDashboardComponent,
     GrillaEquiposComponent,
     DetalleEquipoComponent,
@@ -23,6 +23,7 @@ import { MapaEquiposComponent }   from './components/mapa-equipos/mapa-equipos.c
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AutenticationModule,
     NgbModule
   ],
   providers: [],

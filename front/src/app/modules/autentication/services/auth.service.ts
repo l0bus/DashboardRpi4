@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router }                  from '@angular/router';
 import { Subject }                 from 'rxjs';
 
-import { Login }           from './models/login';
-import { ConfigService }   from 'src/app/services/config/config.service';
-import { ResetPassword }   from './models/reset-password';
-import { Usuario }         from './models/usuario';
+import { Login }           from '../models/login';
+import { ResetPassword }   from '../models/reset-password';
+import { Usuario }         from '../models/usuario';
 
-import { AppUIUtilsService }   from 'src/app/services/appUIUtils/app.ui.utils.service';
+import { AppUIUtilsService }   from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
+import { ConfigService }   from 'src/app/services/config/config.service';
 
 @Injectable({
   providedIn: 'root'
