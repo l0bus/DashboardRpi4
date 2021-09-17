@@ -1,1 +1,38 @@
-<p>login-view works!</p>
+<div class="container content">
+    <div class="row disable-select">
+        <div class="col col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+            <div class="logo"><img  src="assets/img/logo.png" /></div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend disable-select">
+                  <span class="input-group-text">Usuario</span>
+                </div>
+               <input type="text" aria-label="user" class="form-control" (keypress)="keyPress($event, 'user')"
+                        [(ngModel)]="login.username" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend disable-select">
+                  <span class="input-group-text">Contraseña</span>
+                </div>
+               <input type="password" aria-label="pass" class="form-control" (keypress)="keyPress($event, 'pass')"
+                        [(ngModel)]="login.password" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+            <button type="button" class="btn btn-dark col-12" (click)="next()">Ingresar</button>
+        </div>
+    </div>
+</div>

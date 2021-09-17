@@ -1,0 +1,18 @@
+.logo img {
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+    
+
+.logo {
+    position: relative;
+    height: 250px;
+}
+
+.content {
+    background-color: linear-gradient(#485563, #29323c)
+}
+    
