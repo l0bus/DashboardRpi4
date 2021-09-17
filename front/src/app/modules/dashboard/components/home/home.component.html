@@ -1,1 +1,31 @@
-<p>home works!</p>
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <li ngbNavItem>
+      <a ngbNavLink>Equipos</a>
+      <ng-template ngbNavContent>
+        <app-grilla-equipos></app-grilla-equipos>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink>Estadisticas</a>
+      <ng-template ngbNavContent>
+        <app-detalle-equipo></app-detalle-equipo>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem>
+        <a ngbNavLink>Mapa</a>
+        <ng-template ngbNavContent>
+            <app-mapa-equipos></app-mapa-equipos>
+        </ng-template>
+    </li>
+
+    <li ngbDropdown class="nav-item">
+        <a href (click)="false" class="nav-link" ngbDropdownToggle>Sesión</a>
+        <div ngbDropdownMenu>
+          <button ngbDropdownItem (click)="logout()">Salir</button>
+        </div>
+      </li>
+</ul>
+
+ <div [ngbNavOutlet]="nav" class="mt-2"></div>
