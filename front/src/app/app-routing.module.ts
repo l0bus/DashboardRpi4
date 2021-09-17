@@ -5,7 +5,6 @@ import { AuthenticationGuard  } from 'src/app/modules/autentication/services/aut
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', loadChildren: () => import('src/app/modules/autentication/componentes/login-view/login-view.module').then(m => m.LoginViewModule) },
 ];
 
 @NgModule({
