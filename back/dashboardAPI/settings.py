@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-u40cqdj^63$k0dcf&!%c23tz@l@kb_c=*^hjf=#2(%4%ddg*+^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "estadisticas1.api.greenborn.com.ar"]
 
 
 # Application definition
