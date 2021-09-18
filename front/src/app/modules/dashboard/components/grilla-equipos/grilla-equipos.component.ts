@@ -31,7 +31,8 @@ export class GrillaEquiposComponent implements OnInit {
   setSubsEvents():void {
     this.GetAOKSubj = this.equiposService.GetAllOK.subscribe({  next: ( response: APIResponse ) => {
         this.appUIUtilsService.dismissLoading();
-        this.listadoEquipos = response.results;
+        this.dashboardService.listadoEquipos = response.results;
+        this.listadoEquipos                  = response.results;
     } });
 
     this.GetAESubj = this.equiposService.GetAllE.subscribe({  next: ( params: any ) => {

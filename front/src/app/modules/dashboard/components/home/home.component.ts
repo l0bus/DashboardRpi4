@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
   private ChangeLocationSubj:any = null;
   ngOnInit(): void {
     this.ChangeLocationSubj = this.dashboardService.ChangeLocation.subscribe({  next: ( response: any ) => {
-      this.activeNav = response.location;
+      this.activeNav                            = response.location;
+      this.dashboardService.paramsDetalleEquipo = response.params;
     } });
   }
 

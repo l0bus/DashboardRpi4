@@ -9,4 +9,7 @@ export class DashboardService {
   constructor() { }
 
   public ChangeLocation:Subject<any> = new Subject();
+  
+  public paramsDetalleEquipo:any = null;
+  public listadoEquipos:any      = [];
 }
