@@ -3,6 +3,7 @@ import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.ut
 import { EquiposService } from '../../services/equipos.service';
 
 import { APIResponse } from '../../models/APIResponse';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-grilla-equipos',
@@ -15,7 +16,8 @@ export class GrillaEquiposComponent implements OnInit {
 
   constructor(
     private equiposService:    EquiposService,
-    private appUIUtilsService: AppUIUtilsService
+    private appUIUtilsService: AppUIUtilsService,
+    private dashboardService:  DashboardService
   ) { }
 
   ngOnInit(): void {
@@ -47,8 +49,8 @@ export class GrillaEquiposComponent implements OnInit {
     this.unSetRequestsSubscriptions();
   }
 
-  detalles(){
-    
+  detalles( equipo ){
+    this.dashboardService.ChangeLocation.next({ location: "ngb-nav-1", params:equipo });
   }
 
 }
