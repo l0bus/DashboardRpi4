@@ -9,7 +9,7 @@ import { DashboardService } from '../../services/dashboard.service';
 export class DetalleEquipoComponent implements OnInit {
 
   constructor(
-    private dashboardService: DashboardService
+    public dashboardService: DashboardService
   ) { }
 
   ngOnInit(): void {

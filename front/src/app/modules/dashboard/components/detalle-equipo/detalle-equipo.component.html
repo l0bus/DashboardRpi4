@@ -1,1 +1,11 @@
-<p>detalle-equipo works!</p>
+<div class="col">
+    <div class="row">
+
+        <div class="col col-12 col-md-10 offset-md-1">
+            <div class="alert alert-warning" role="alert" *ngIf="this.dashboardService.listadoEquipos.length == 0">
+                No se encontraron datos de equipos.
+            </div>
+        </div>
+
+    </div>
+</div>
