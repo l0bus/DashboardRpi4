@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
+import { EquiposService } from '../../services/equipos.service';
 
 @Component({
   selector: 'app-grilla-equipos',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GrillaEquiposComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private equiposService:    EquiposService,
+    private appUIUtilsService: AppUIUtilsService
+  ) { }
 
   ngOnInit(): void {
+    this.setSubsEvents();
+    this.equiposService.getAll();
+  }
+
+  public GetAOKSubj:any = null;
+  public GetAESubj:any  = null;
+  setSubsEvents():void {
+    this.GetAOKSubj = this.equiposService.GetAllOK.subscribe({  next: ( response: any ) => {
+    } });
+
+    this.GetAESubj = this.equiposService.GetAllE.subscribe({  next: ( params: any ) => {
+        this.appUIUtilsService.dismissLoading();
+        this.appUIUtilsService.showMessage('Ocurrió un error, reintente más tarde.');
+    } });
+  }
+
+  unSetRequestsSubscriptions():void {
+    this.GetAOKSubj.unsubscribe();
+    this.GetAESubj.unsubscribe();
+  }
+
+  ngOnDestroy(){
+    this.unSetRequestsSubscriptions();
   }
 
 }
