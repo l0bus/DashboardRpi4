@@ -1,1 +1,14 @@
-<p>grilla-equipos works!</p>
+<div class="col">
+    <div class="row">
+
+        <div class="card mt-3 col-12 col-sm-5 col-md-4 col-lg-3" *ngFor="let equipo of listadoEquipos">
+            <div class="card-body">
+                <h3>{{equipo.cod}}</h3>
+                <p><b>id:</b>{{equipo.id}}</p>
+                <p>{{equipo.descripcion}}</p>
+                <button type="button" class="btn btn-info" (click)="detalles(equipo)">Detalles</button>
+            </div>
+        </div>
+
+    </div>
+</div>
