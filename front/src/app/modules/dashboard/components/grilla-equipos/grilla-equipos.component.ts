@@ -33,6 +33,9 @@ export class GrillaEquiposComponent implements OnInit {
         this.appUIUtilsService.dismissLoading();
         this.dashboardService.listadoEquipos = response.results;
         this.listadoEquipos                  = response.results;
+        if (response.results.length > 0){
+          this.dashboardService.paramsDetalleEquipo = response.results[0];
+        }
     } });
 
     this.GetAESubj = this.equiposService.GetAllE.subscribe({  next: ( params: any ) => {

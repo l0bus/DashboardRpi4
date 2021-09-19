@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbNav, NgbNavItem, NgbNavLink } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/modules/autentication/services/auth.service';
 import { DashboardService } from '../../services/dashboard.service';
@@ -9,7 +9,7 @@ import { DashboardService } from '../../services/dashboard.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  
   public activeNav:string = "ngb-nav-0";
 
   constructor(
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
       this.activeNav                            = response.location;
       this.dashboardService.paramsDetalleEquipo = response.params;
     } });
+
   }
 
   ngOnDestroy(){

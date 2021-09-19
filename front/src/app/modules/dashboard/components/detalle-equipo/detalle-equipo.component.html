@@ -1,11 +1,29 @@
-<div class="col">
-    <div class="row">
-
-        <div class="col col-12 col-md-10 offset-md-1">
-            <div class="alert alert-warning" role="alert" *ngIf="this.dashboardService.listadoEquipos.length == 0">
-                No se encontraron datos de equipos.
+<div class="container-fluid">
+    <div class="row" *ngIf="noData">
+        <div class="col">
+    
+            <div class="col col-12 col-md-10 offset-md-1">
+                <div class="alert alert-warning" role="alert">
+                    No se encontraron datos de equipos.
+                </div>
             </div>
+    
         </div>
-
+    </div>
+    
+    <div class="row" *ngIf="!noData">
+        <div class="col">
+    
+            <canvas baseChart width="500" height="200"
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins">
+            </canvas>
+    
+        </div>
     </div>
 </div>
+

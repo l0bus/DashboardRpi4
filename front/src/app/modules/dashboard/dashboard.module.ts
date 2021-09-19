@@ -11,6 +11,7 @@ import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equi
 import { MapaEquiposComponent } from './components/mapa-equipos/mapa-equipos.component';
 
 import { AuthInterceptorService } from '../autentication/services/auth-interceptor.service';
+import { DetalleEquipoModule } from './components/detalle-equipo/detalle-equipo.module';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
     CommonModule,
     NgbModule,
     NgbNavModule,
+    DetalleEquipoModule,
     RouterModule.forChild(routes)
   ],
   providers: [
