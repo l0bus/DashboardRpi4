@@ -13,6 +13,10 @@ import { MapaEquiposComponent } from './components/mapa-equipos/mapa-equipos.com
 import { AuthInterceptorService } from '../autentication/services/auth-interceptor.service';
 import { DetalleEquipoModule } from './components/detalle-equipo/detalle-equipo.module';
 
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import * as more from 'highcharts/highcharts-more.src';
+import * as exporting from 'highcharts/modules/exporting.src';
+
 const routes: Routes = [
   {
     path: 'home',
@@ -32,6 +36,7 @@ const routes: Routes = [
     CommonModule,
     NgbModule,
     NgbNavModule,
+    ChartModule,
     DetalleEquipoModule,
     RouterModule.forChild(routes)
   ],
@@ -40,7 +45,8 @@ const routes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting ] }
   ],
 })
 export class DashboardModule { }

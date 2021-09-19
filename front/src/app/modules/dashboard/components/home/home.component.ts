@@ -11,7 +11,7 @@ import { DashboardService } from '../../services/dashboard.service';
 export class HomeComponent implements OnInit {
   
   public activeNav:string = "ngb-nav-0";
-
+  
   constructor(
     private authService:      AuthService,
     private dashboardService: DashboardService
