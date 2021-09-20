@@ -41,6 +41,7 @@ class LogEquipoRegSerializer(serializers.ModelSerializer):
             'id',
             'id_equipo',
             'fecha_registro',
+            'file_path'
         ]
 
 class LogEquipoDataSerializer(serializers.ModelSerializer):
