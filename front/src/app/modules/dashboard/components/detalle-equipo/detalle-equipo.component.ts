@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 
 import { Chart } from 'angular-highcharts';
+import { LogEquipoService } from '../../services/log-equipo.service';
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -31,14 +32,20 @@ export class DetalleEquipoComponent implements OnInit {
   }  as any);
 
   constructor(
-    public dashboardService: DashboardService
+    public dashboardService: DashboardService,
+    public logEquipoService: LogEquipoService
   ) {
   }
 
   ngOnInit(): void {
     this.noData = this.dashboardService.listadoEquipos.length == 0;
-    console.log(this.dashboardService.paramsDetalleEquipo);
+    this.initDataForEquipo();
     this.chart.addPoint(4);
+
+  }
+
+  initDataForEquipo(){
+    console.log(this.dashboardService.paramsDetalleEquipo);
   }
 
   ngOnDestroy(){

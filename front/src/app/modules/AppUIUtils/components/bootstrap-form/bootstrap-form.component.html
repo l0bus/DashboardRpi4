@@ -1,0 +1,63 @@
+<div class="row form-title-cont">
+    <div class="col">
+      <h3 class="title">{{config.title}}</h3>
+    </div>
+</div>
+
+<div class="row" *ngIf="config.repeatBtnInTop">
+  <div class="col-auto" *ngFor="let btn of config.buttons">
+      <button type="submit" class="btn {{btn.getExtraClass()}}" (click)="elementOnClik( btn )">{{btn.getTitle()}}</button>
+  </div>
+  <div class="col"></div>
+</div>
+
+<div class="row">
+    <div class="{{config.elementContentClass}} form-group" *ngFor="let element of config.elements">
+      <label for="{{element.field}}"
+              *ngIf="element !== undefined && element.isElementType('field') && !element.isType( 'checkbox' )">{{element.getTitle()}}</label>
+      <input type="{{element.type}}" id="{{element.field}}" aria-describedby="emailHelp"
+              *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isInputType()"
+              class="form-control {{element.getExtraClass()}}" [ngClass]="{bootstrapFieldError:element.onError}"
+              [disabled] = "element.getDisabled()"
+              (click)="elementOnClik( element )"
+              (change)="elementOnChange( element )"
+              [(ngModel)]="config.model[element.field]" [ngModelOptions]="{standalone: true}">
+
+      <button class="btn {{element.getExtraClass()}}" style="margin-top: 2em;"
+              (click)="elementOnClik( element )"
+              (change)="elementOnChange( element )"
+              *ngIf="element !== undefined && element.isElementType('button') && element.isVisible() && element.isInputType()">{{element.getTitle()}}</button>
+
+      <select class="form-control {{element.getExtraClass()}}" id="{{element.field}}"
+                *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isType( 'select' )"
+                [ngClass]="{bootstrapFieldError:element.onError}"
+                [disabled] = "element.getDisabled()"
+                (click)="elementOnClik( element )"
+                (change)="elementOnChange( element )"
+                [(ngModel)]="config.model[element.field]" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let option of element.options" value="{{option.value}}">{{option.text}}</option>
+      </select>
+
+      <div class="form-check text-left"
+            *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isType( 'checkbox' )">
+        <input class="form-check-input" type="checkbox" value="" id="check_{{element.field}}"
+                [(ngModel)]="config.model[element.field]" [ngModelOptions]="{standalone: true}"
+                (click)="elementOnClik( element )"
+                [ngClass]="{bootstrapFieldError:element.onError}"
+                (change)="elementOnChange( element )"
+                [disabled] = "element.getDisabled()">
+        <label class="form-check-label" for="check_{{element.field}}"> {{element.getTitle()}} </label>
+      </div>
+
+      <small id="emailHelp" class="form-text text-muted"
+              *ngIf="element !== undefined && element.smallHelpText !== ''">{{element.smallHelpText}}</small>
+    </div>
+
+</div>
+
+<div class="row">
+  <div class="col-auto" *ngFor="let btn of config.buttons">
+      <button type="submit" class="btn {{btn.getExtraClass()}}" (click)="elementOnClik( btn )">{{btn.getTitle()}}</button>
+  </div>
+  <div class="col"></div>
+</div>

@@ -1,16 +1,14 @@
-// [MODIFICAR] Se podrían simplificar las funciones para los verbos Get,Post,Put, etc ya que son todas iguales
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject }    from 'rxjs';
-import { Router }     from '@angular/router';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { ConfigService } from 'src/app/services/config/config.service';
+import { LogEquipo } from '../models/LogEquipo';
 
-import { ConfigService }   from 'src/app/services/config/config.service';
-
-import { Equipo } from '../models/Equipo';
-
-@Injectable({ providedIn: 'root' })
-export class EquiposService {
+@Injectable({
+  providedIn: 'root'
+})
+export class LogEquipoService {
 
   private action:any = {
     url:'',
@@ -63,7 +61,7 @@ export class EquiposService {
 
   public responseLastPost:any;
 
-  post(model:Equipo){
+  post(model:LogEquipo){
     this.http.post(this.action.apiUrl + this.action.url, model ).subscribe(
         data => {
           this.responseLastPost = data;
@@ -78,7 +76,7 @@ export class EquiposService {
   public PutOk = new Subject();
   public PutE = new Subject();
 
-  put(model:Equipo){
+  put(model:LogEquipo){
     this.http.put(this.action.apiUrl + this.action.url + '/' + model.id, model).subscribe(
         data => {  this.PutOk.next(data); },
         err =>  {  this.PutE.next(err);  }
@@ -97,6 +95,4 @@ export class EquiposService {
         err =>  {  this.DeleteE.next(err);  }
       );
   }
-
-  
 }
