@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
+import { ConfigService } from 'src/app/services/config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,18 @@ import { throwError } from 'rxjs';
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(
-    private authService: AuthService,
-    private router:      Router
+    private authService:   AuthService,
+    private configService: ConfigService,
+    private router:        Router
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): any {
     const token: string = this.authService.getToken();
+    let config:any = this.configService.getConfigData();
 
     let request = req;
 
-    if (token) {
+    if (token && request.url != (config.apiBaseUrl + config.loginAction) ) {
       request = req.clone({
         setHeaders: {
           Authorization: `Token ${ token }`

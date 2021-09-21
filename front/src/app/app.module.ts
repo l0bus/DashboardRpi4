@@ -10,10 +10,16 @@ import { ChartModule } from 'angular-highcharts';
 import { AutenticationModule } from './modules/autentication/autentication.module';
 import { DashboardModule }     from './modules/dashboard/dashboard.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppUIUtilsModule } from './modules/AppUIUtils/app-uiutils.module';
+
+import { LoadingComponent } from './modules/AppUIUtils/components/loading/loading.component';
+import { MessageComponent } from './modules/AppUIUtils/components/message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoadingComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AutenticationModule,
     DashboardModule,
     FormsModule,
+    AppUIUtilsModule,
     ReactiveFormsModule,
     ChartModule,
     NgbModule, 
