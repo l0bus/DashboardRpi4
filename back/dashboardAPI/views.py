@@ -57,5 +57,5 @@ class LogEquipoDataViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = {'id_log_reg':['exact'], 'key_id':['exact'], 'id_log_reg__id_equipo':['exact'], 'id_log_reg__fecha_registro':['lte', 'gte']}
+    filterset_fields = {'id_log_reg':['exact'], 'key_id':['exact'], 'key_id__cod':['exact'], 'id_log_reg__id_equipo':['exact'], 'id_log_reg__fecha_registro':['lte', 'gte']}
     ordering_fields = ['id','created_at']
