@@ -45,12 +45,7 @@ class LogEquipoRegSerializer(serializers.ModelSerializer):
         ]
 
 class LogEquipoDataSerializer(serializers.ModelSerializer):
+    key_code = serializers.ReadOnlyField()
     class Meta:
         model = LogEquipoData
-        fields = [
-            'id',
-            'key_id',
-            'value',
-            'id_log_reg',
-            'created_at'
-        ]
+        fields = ['id','key_code','key_id','value','id_log_reg','created_at']
