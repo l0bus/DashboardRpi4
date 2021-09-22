@@ -17,6 +17,8 @@ export class BootstrapFormComponent implements OnInit {
   private validateForm:any = null;
   private validationResult:any = { success:true, errors:[] }
 
+  public form_model:any = [];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -70,7 +72,8 @@ export class BootstrapFormComponent implements OnInit {
     element.onClick.next( element );
   }
 
-  elementOnChange( element:BootstrapFormElement ){
+  elementOnChange( element:BootstrapFormElement, event=undefined ){
+    this.config.model[element.field] = event.target.value;
     element.onChange.next( element );
   }
 

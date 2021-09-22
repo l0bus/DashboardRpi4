@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-    <div class="{{config.elementContentClass}} form-group" *ngFor="let element of config.elements">
+    <div class="{{config.elementContentClass}} form-group" *ngFor="let element of config.elements; index as ii">
       <label for="{{element.field}}"
               *ngIf="element !== undefined && element.isElementType('field') && !element.isType( 'checkbox' )">{{element.getTitle()}}</label>
       <input type="{{element.type}}" id="{{element.field}}" aria-describedby="emailHelp"
@@ -20,8 +20,7 @@
               class="form-control {{element.getExtraClass()}}" [ngClass]="{bootstrapFieldError:element.onError}"
               [disabled] = "element.getDisabled()"
               (click)="elementOnClik( element )"
-              (change)="elementOnChange( element )"
-              [(ngModel)]="config.model[element.field]" [ngModelOptions]="{standalone: true}">
+              (change)="elementOnChange( element, $event )">
 
       <button class="btn {{element.getExtraClass()}}" style="margin-top: 2em;"
               (click)="elementOnClik( element )"
@@ -33,18 +32,16 @@
                 [ngClass]="{bootstrapFieldError:element.onError}"
                 [disabled] = "element.getDisabled()"
                 (click)="elementOnClik( element )"
-                (change)="elementOnChange( element )"
-                [(ngModel)]="config.model[element.field]" [ngModelOptions]="{standalone: true}">
+                (change)="elementOnChange( element, $event )">
         <option *ngFor="let option of element.options" value="{{option.value}}">{{option.text}}</option>
       </select>
 
       <div class="form-check text-left"
             *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isType( 'checkbox' )">
         <input class="form-check-input" type="checkbox" value="" id="check_{{element.field}}"
-                [(ngModel)]="config.model[element.field]" [ngModelOptions]="{standalone: true}"
                 (click)="elementOnClik( element )"
                 [ngClass]="{bootstrapFieldError:element.onError}"
-                (change)="elementOnChange( element )"
+                (change)="elementOnChange( element, $event )"
                 [disabled] = "element.getDisabled()">
         <label class="form-check-label" for="check_{{element.field}}"> {{element.getTitle()}} </label>
       </div>

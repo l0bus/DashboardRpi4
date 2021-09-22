@@ -97,6 +97,7 @@ export class BootstrapFormElement {
   public field:string = '';
   public smallHelpText:string = '';
   public elementId:number = 0;
+  public model:any;
 
   public type:string = 'text';
   setType( type:string ){
