@@ -5,10 +5,10 @@ import { Router }     from '@angular/router';
 
 import { ConfigService }   from 'src/app/services/config/config.service';
 
-import { Equipo } from '../models/Equipo';
+import { CamposLog } from '../models/CamposLog';
 
 @Injectable({ providedIn: 'root' })
-export class EquiposService {
+export class CamposLogService {
 
   private action:any = {
     url:'',
@@ -20,7 +20,7 @@ export class EquiposService {
     public config:        ConfigService,
     public router:        Router,
   ) {
-    this.action.url    = this.config.getConfigData().equiposAction;
+    this.action.url    = this.config.getConfigData().camposLogAction;
     this.action.apiUrl = this.config.getConfigData().apiBaseUrl;
   }
 
@@ -61,7 +61,7 @@ export class EquiposService {
 
   public responseLastPost:any;
 
-  post(model:Equipo){
+  post(model:CamposLog){
     this.http.post(this.action.apiUrl + this.action.url, model ).subscribe(
         data => {
           this.responseLastPost = data;
@@ -76,7 +76,7 @@ export class EquiposService {
   public PutOk = new Subject();
   public PutE = new Subject();
 
-  put(model:Equipo){
+  put(model:CamposLog){
     this.http.put(this.action.apiUrl + this.action.url + '/' + model.id, model).subscribe(
         data => {  this.PutOk.next(data); },
         err =>  {  this.PutE.next(err);  }

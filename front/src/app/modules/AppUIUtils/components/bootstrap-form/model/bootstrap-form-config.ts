@@ -225,6 +225,7 @@ export class BootstrapFormElement {
 
 export class FieldBootstrapFormConfig extends BootstrapFormElement {
   public placeholder:string = '';
+  public model:any;
 
   constructor( p:any ){
     super( p );

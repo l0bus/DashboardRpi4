@@ -13,6 +13,7 @@ export class ConfigService {
       equiposAction:"equipo",
       logEquipoAction:"log_equipo",
       logEquipoRegAction:"log_equipo_data",
+      camposLogAction:"campos_log",
       appName: "app_estadisticas1_dev_"
     };
   }

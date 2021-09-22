@@ -19,6 +19,7 @@
               *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isInputType()"
               class="form-control {{element.getExtraClass()}}" [ngClass]="{bootstrapFieldError:element.onError}"
               [disabled] = "element.getDisabled()"
+              [(ngModel)]="element.model" [ngModelOptions]="{standalone: true}"
               (click)="elementOnClik( element )"
               (change)="elementOnChange( element, $event )">
 
@@ -30,6 +31,7 @@
       <select class="form-control {{element.getExtraClass()}}" id="{{element.field}}"
                 *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isType( 'select' )"
                 [ngClass]="{bootstrapFieldError:element.onError}"
+                [(ngModel)]="element.model" [ngModelOptions]="{standalone: true}"
                 [disabled] = "element.getDisabled()"
                 (click)="elementOnClik( element )"
                 (change)="elementOnChange( element, $event )">
@@ -39,6 +41,7 @@
       <div class="form-check text-left"
             *ngIf="element !== undefined && element.isElementType('field') && element.isVisible() && element.isType( 'checkbox' )">
         <input class="form-check-input" type="checkbox" value="" id="check_{{element.field}}"
+                [(ngModel)]="element.model" [ngModelOptions]="{standalone: true}"
                 (click)="elementOnClik( element )"
                 [ngClass]="{bootstrapFieldError:element.onError}"
                 (change)="elementOnChange( element, $event )"

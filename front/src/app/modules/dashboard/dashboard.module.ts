@@ -16,6 +16,8 @@ import { DetalleEquipoModule } from './components/detalle-equipo/detalle-equipo.
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
+import { BootstrapFormComponent } from '../AppUIUtils/components/bootstrap-form/bootstrap-form.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -31,6 +33,7 @@ const routes: Routes = [
     GrillaEquiposComponent,
     DetalleEquipoComponent,
     MapaEquiposComponent,
+    BootstrapFormComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ const routes: Routes = [
     NgbNavModule,
     ChartModule,
     DetalleEquipoModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   providers: [

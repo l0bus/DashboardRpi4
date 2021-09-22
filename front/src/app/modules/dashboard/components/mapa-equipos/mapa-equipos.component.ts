@@ -44,7 +44,29 @@ export class MapaEquiposComponent implements OnInit {
 
   addMapPoint(params){
     this.cc_regs.push(params);
-    console.log(this.cc_regs);
+    let latitud:number  = this.getCoordinateValueOfString(this.getValueOf(params,'LATITUD'));
+    let longitud:number = this.getCoordinateValueOfString(this.getValueOf(params,'LONGITUD'));
+    let point:any = {
+      py: 0, 
+      px: 0,
+      data: params
+    };
+    this.map_points.push(point);
+    console.log(latitud);
+    console.log(longitud);
+  }
+
+  getCoordinateValueOfString(s:string){
+    return 0;
+  }
+
+  getValueOf( registro:any, key:string){
+    for (let c=0; c < registro.length; c++){
+      if (registro[c].key_code == key){
+        return registro[c].value;
+      }
+    }
+    return '';
   }
 
   requestLastLog(){

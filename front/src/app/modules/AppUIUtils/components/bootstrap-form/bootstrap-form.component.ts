@@ -73,7 +73,7 @@ export class BootstrapFormComponent implements OnInit {
   }
 
   elementOnChange( element:BootstrapFormElement, event=undefined ){
-    this.config.model[element.field] = event.target.value;
+    this.config.model[element.field] = event.target.value;console.log(element);
     element.onChange.next( element );
   }
 
