@@ -1,11 +1,11 @@
 from datetime import datetime
 import re
 
-from dashboardAPI.models import CamposLog
-from dashboardAPI.models import TipoEquipos
-from dashboardAPI.models import Equipos
-from dashboardAPI.models import LogEquipoReg
-from dashboardAPI.models import LogEquipoData
+from dashboardAPI.models.campos_log import CamposLog
+from dashboardAPI.models.tipo_equipos import TipoEquipos
+from dashboardAPI.models.equipos import Equipos
+from dashboardAPI.models.log_equipo_reg import LogEquipoReg
+from dashboardAPI.models.log_equipo_data import LogEquipoData
 
 class DBLogInserter:
 

@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 import csv
 from dashboardAPI.components.db_log_inserter import DBLogInserter
 
-from dashboardAPI.models import LogEquipoReg
+from dashboardAPI.models.log_equipo_reg import LogEquipoReg
 
 class Command(BaseCommand):
     help = 'Agrega nuevos registros a la DB, se debe especificar el archivo con los logs'
