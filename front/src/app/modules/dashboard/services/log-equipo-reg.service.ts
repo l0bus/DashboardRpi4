@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ConfigService } from 'src/app/services/config/config.service';
-import { LogEquipo } from '../models/LogEquipo';
+import { LogEquipoData } from '../models/LogEquipoData';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LogEquipoService {
+export class LogEquipoRegService {
 
   private action:any = {
     url:'',
@@ -20,7 +20,7 @@ export class LogEquipoService {
     public config:        ConfigService,
     public router:        Router,
   ) {
-    this.action.url    = this.config.getConfigData().logEquipoAction;
+    this.action.url    = this.config.getConfigData().logEquipoRegAction;
     this.action.apiUrl = this.config.getConfigData().apiBaseUrl;
   }
 
@@ -61,7 +61,7 @@ export class LogEquipoService {
 
   public responseLastPost:any;
 
-  post(model:LogEquipo){
+  post(model:LogEquipoData){
     this.http.post(this.action.apiUrl + this.action.url, model ).subscribe(
         data => {
           this.responseLastPost = data;
@@ -76,7 +76,7 @@ export class LogEquipoService {
   public PutOk = new Subject();
   public PutE = new Subject();
 
-  put(model:LogEquipo){
+  put(model:LogEquipoData){
     this.http.put(this.action.apiUrl + this.action.url + '/' + model.id, model).subscribe(
         data => {  this.PutOk.next(data); },
         err =>  {  this.PutE.next(err);  }

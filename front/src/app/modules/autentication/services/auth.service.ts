@@ -46,7 +46,7 @@ export class AuthService {
           this.gral.dismissLoading();
           localStorage.setItem( this.confGral['appName']+'logedIn',      JSON.stringify( false ) );
           localStorage.setItem( this.confGral['appName']+'token',        JSON.stringify( '' ) );
-          this.gral.showMessage( 'Ha ocurrido un error, por favor reintente más tarde.' );
+          this.gral.showMessage( 'Usuario o contraseña incorrecta.' );
         }
       );
   }

@@ -12,6 +12,7 @@ export class ConfigService {
       loginAction:"api-token-auth/",
       equiposAction:"equipo",
       logEquipoAction:"log_equipo",
+      logEquipoRegAction:"log_equipo_data",
       appName: "app_estadisticas1_dev_"
     };
   }

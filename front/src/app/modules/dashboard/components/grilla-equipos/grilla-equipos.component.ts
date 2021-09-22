@@ -23,7 +23,7 @@ export class GrillaEquiposComponent implements OnInit {
   ngOnInit(): void {
     this.setSubsEvents();
     this.appUIUtilsService.presentLoading();
-    this.equiposService.getAll();
+    this.equiposService.getAll('?limit=200');
   }
 
   public GetAOKSubj:any = null;
