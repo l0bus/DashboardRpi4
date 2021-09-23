@@ -1,3 +1,4 @@
+from django.db.models.query import Prefetch
 from django_filters.filters import OrderingFilter
 from django_filters.rest_framework.backends import DjangoFilterBackend
 
@@ -48,14 +49,14 @@ class LogEquipoRegViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = {'id_equipo':['exact'], 'fecha_registro':['lte', 'gte'], 'file_path':['exact'] }
-    ordering_fields = ['id','fecha_registro','id_equipo']
+    filterset_fields = {'equipo':['exact'], 'fecha_registro':['lte', 'gte'], 'file_path':['exact'] }
+    ordering_fields = ['id','fecha_registro','equipo']
 
 class LogEquipoDataViewSet(viewsets.ModelViewSet):
-    queryset = LogEquipoData.objects.all()
+    queryset = LogEquipoData.objects.prefetch_related(Prefetch('log_equipo_reg')).select_related('key').all()
     serializer_class = LogEquipoDataSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = {'id_log_reg':['exact'], 'key_id':['exact'], 'key_id__cod':['exact'], 'id_log_reg__id_equipo':['exact'], 'id_log_reg__fecha_registro':['lte', 'gte']}
+    filterset_fields = {'key':['exact'], 'key__cod':['exact'], 'log_equipo_reg__fecha_registro':['lte', 'gte'],'log_equipo_reg__equipo':['exact']}
     ordering_fields = ['id','created_at']
