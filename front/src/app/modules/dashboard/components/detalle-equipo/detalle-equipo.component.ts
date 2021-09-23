@@ -9,6 +9,7 @@ import { FiltroEstadisticaForm } from '../../models/FiltroEstadisticaForm';
 import { CamposLogService } from '../../services/campos.log.service';
 import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
 import { APIResponse } from '../../models/APIResponse';
+import { LogEquipoRegService } from '../../services/log-equipo-reg.service';
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -28,6 +29,7 @@ export class DetalleEquipoComponent implements OnInit {
   private keySelect:any = null;
   private applyFilters:any = null;
   private applyFiltersClick:any = null;
+  private formIsValidated:any = null;
   
   public chart: Chart = new Chart({
     chart: {
@@ -48,10 +50,11 @@ export class DetalleEquipoComponent implements OnInit {
   }  as any);
 
   constructor(
-    public dashboardService:  DashboardService,
-    public logEquipoService:  LogEquipoService,
-    private camposLogService: CamposLogService,
-    private appUIUtilsService: AppUIUtilsService
+    public dashboardService:     DashboardService,
+    public logEquipoService:     LogEquipoService,
+    private logEquipoRegService: LogEquipoRegService,
+    private camposLogService:    CamposLogService,
+    private appUIUtilsService:   AppUIUtilsService
   ) {
   }
 
@@ -65,7 +68,7 @@ export class DetalleEquipoComponent implements OnInit {
 
   initDataForEquipo(){
     this.equipoSelect.model = this.dashboardService.paramsDetalleEquipo.id;
-    console.log(this.equipoSelect.model);
+    this.formConfig.model.equipo_id = this.dashboardService.paramsDetalleEquipo.id;
   }
 
   setFormConfig(){
@@ -104,20 +107,50 @@ export class DetalleEquipoComponent implements OnInit {
     this.formConfig.AddElement( this.applyFilters );
 
     //EVENTOS DEL FORMULARIO
-    this.equipoSelectChange = this.equipoSelect.onChange.subscribe({  next: ( params: any ) => {
-      if (this.formConfig.model.equipo_id != ''){
-        console.log(this.formConfig.model);
-      }
-    } });
-
+    
+    //BOTON APLICAR
     this.applyFiltersClick = this.applyFilters.onClick.subscribe({  next: ( params: any ) => {
       this.formConfig.validateForm.next();
-      
     } });
+
+    //subscripción a subject de validación de formulario
+    this.formIsValidated = this.formConfig.isValidated.subscribe({  next: ( params: any ) => {
+      if ( params.success == true ){
+        //Esta todo OK, se puede hacer peticiòn para consultar datos
+        let url_p = '?log_equipo_reg__equipo='+this.formConfig.model.equipo_id+
+                    '&log_equipo_reg__fecha_registro__gte='+this.formConfig.model.date_start+' 00:00:00.000000'+
+                    '&log_equipo_reg__fecha_registro__lte='+this.formConfig.model.date_end+' 00:00:00.000000'+
+                    '&key='+this.formConfig.model.key_id;
+        this.logEquipoRegService.getAll(url_p);
+        this.appUIUtilsService.presentLoading();
+      } else {
+        this.appUIUtilsService.showMessage( this.appUIUtilsService.getMessageFErrors( params.errors ) );
+      }
+  } });
+  }
+
+  updateChart(response:any){
+    if (response.length > 0){
+      this.chart.removeSeries(0);
+      let serie:any = [];
+
+      for (let c=0; c < response.length; c++){
+        serie.push(Number(response[c].value));
+      }
+
+      this.chart.addSeries({
+        name: response[0].key_code,
+        data: serie
+      } as any,true,true);
+    } else {
+      this.appUIUtilsService.showMessage('No se obtuvieron datos, en el intervalo de tiempo especificado.');
+    }
   }
 
   private GetACOKSubj:any = null;
   private GetACESubj:any = null;
+  private GetALOKSubj:any = null;
+  private GetALESubj:any = null;
 
   setSubsEvents():void {
     //CAMPOS
@@ -125,12 +158,22 @@ export class DetalleEquipoComponent implements OnInit {
         this.appUIUtilsService.dismissLoading();
         this.dashboardService.listadoKeys = response.results;
         this.formConfig.loadData.next(true); //Se le indica al componente de formularios que actualize sus respectivos campos
-        console.log(this.dashboardService.listadoKeys);
     } });
 
     this.GetACESubj = this.camposLogService.GetAllE.subscribe({  next: ( params: any ) => {
         this.appUIUtilsService.dismissLoading();
         this.appUIUtilsService.showMessage('Ocurrió un error, no se pudo obtener el listado de variables.');
+    } });
+
+    //LOGS
+    this.GetALOKSubj = this.logEquipoRegService.GetAllOK.subscribe({  next: ( response: any ) => {
+      this.appUIUtilsService.dismissLoading();
+      this.updateChart(response);
+    } });
+
+    this.GetALESubj = this.logEquipoRegService.GetAllE.subscribe({  next: ( params: any ) => {
+        this.appUIUtilsService.dismissLoading();
+        this.appUIUtilsService.showMessage('Ocurrió un error, no se pudo obtener el listado de logs.');
     } });
   }
 
@@ -139,6 +182,9 @@ export class DetalleEquipoComponent implements OnInit {
     this.applyFiltersClick.unsubscribe();
     this.GetACOKSubj.unsubscribe();
     this.GetACESubj.unsubscribe();
+    this.formIsValidated.unsubscribe();
+    this.GetALOKSubj.unsubscribe();
+    this.GetALESubj.unsubscribe();
   }
 
 }

@@ -105,7 +105,7 @@ export class BootstrapFormElement {
   }
 
   //Este arreglo define que tipos de campos usan el tag INPUT en el HTML
-  protected inputTypes = ['text', 'number', 'password', 'email', 'date', 'time'];
+  protected inputTypes = ['text', 'number', 'password', 'email', 'date', 'time', 'datetime'];
 
   //Función definida para dar formato al label o al contenido del elemento segun corresponda
   public formatFunction:any = ( i:any )=>{ return i; }
