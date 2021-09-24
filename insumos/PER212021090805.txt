@@ -1,4 +1,4 @@
-C,ID,Nivel_Agua%,Nivel_Combustible%,Horometro,Tag5,Tag6,Tag7,Tag8,tag9,Tag10,Fecha_Hora_Sistema
+C,ID,Nivel_Agua%,Nivel_Combustible%,Horometro,Tag5,Tag6,Tag7,Tag8,tag9,Tag10,Fecha_Hora_Sistema\r\n
 
 D,PER21,88.67,75.49,0,0,0,0,0,0,0,2021/09/08 03:32:02
 D,PER21,88.85,75.5,0,0,0,0,0,0,0,2021/09/08 03:32:03

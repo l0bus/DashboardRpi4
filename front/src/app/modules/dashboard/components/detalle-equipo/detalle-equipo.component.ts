@@ -46,7 +46,14 @@ export class DetalleEquipoComponent implements OnInit {
         name: 'Sin datos, complete el formulario y presione "Aplicar".',
         data: [0,0,0]
       }
-    ]
+    ],
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%Y-%b-%e %l:%M %p }'
+      },
+    },
+   
   }  as any);
 
   constructor(
@@ -130,7 +137,6 @@ export class DetalleEquipoComponent implements OnInit {
   }
 
   updateChart(response:any){
-    console.log(response);
     if (response.length > 0){
       this.chart.removeSeries(0);
       let serieName = '';
@@ -140,7 +146,7 @@ export class DetalleEquipoComponent implements OnInit {
       for (let c=0; c < response.length; c++){
         for(let i=0; i < response[c].log_equipo_data.length; i++){
           if (response[c].log_equipo_data[i].key.id == this.filterParams.key_id){
-            serie.push(Number(response[c].log_equipo_data[i].value));
+            serie.push([new Date(response[c].fecha_registro).getTime(), this.formatValue(response[c].log_equipo_data[i].value)]);
             serieName = response[c].log_equipo_data[i].key.cod;
             break;
           }
@@ -154,6 +160,12 @@ export class DetalleEquipoComponent implements OnInit {
     } else {
       this.appUIUtilsService.showMessage('No se obtuvieron datos, en el intervalo de tiempo especificado.');
     }
+  }
+
+  formatValue(v:any){
+    if (v=="True") return 1;
+    if (v=="False") return 0;
+    return Number(v);
   }
 
   private GetACOKSubj:any = null;
