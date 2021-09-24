@@ -98,7 +98,10 @@ class DBLogInserter:
             equipo_id = equipo[0].id
 
         #Se obtine la fechay hora del registro
-        dateTime = datetime.strptime(row[self.fields['FECHA_HORA_SIS\\r\\n']],"%d/%m/%y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
+        try:
+            dateTime = datetime.strptime(row[self.fields['FECHA_HORA_SIS\\r\\n']],"%d/%m/%y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
+        except Exception as e: #Si un formato de fecha da error, se prueba con otro
+            dateTime = datetime.strptime(row[self.fields['FECHA_HORA_SIS\\r\\n']],"%Y/%m/%d %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
 
         #Se agrega un nuevo registro correspondiente a una entrada de log (Se agregarìa un registro en esta tabla por cada registro en el archivo de logs)
         inser_log_reg = self.insert_log_equipo_reg( equipo_id, dateTime )
