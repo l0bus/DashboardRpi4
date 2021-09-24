@@ -47,8 +47,8 @@ export class MapaEquiposComponent implements OnInit {
     let longitud:any = this.getCCLngValueOfString(this.getValueOf(params.log_equipo_data,'LONGITUD'));
 
     let point:any = {
-      py: (this.cc_esquinaSuperiorDer.lng - longitud) / (this.tamanio_map.alto_lng / this.tamanio_map.alto), 
-      px: (this.cc_esquinaSuperiorDer.lat - latitud) / (this.tamanio_map.ancho_lat / this.tamanio_map.ancho) - this.marquer_size.x*1.5,
+      py: (this.cc_esquinaSuperiorDer.lng - longitud) / (this.tamanio_map.alto_lng / this.tamanio_map.alto)-40, 
+      px: (this.cc_esquinaSuperiorDer.lat - latitud) / (this.tamanio_map.ancho_lat / this.tamanio_map.ancho) - this.marquer_size.x*1.5+24,
       equipo: this.getValueOf(params.log_equipo_data,'ID'),
       data: params
     };

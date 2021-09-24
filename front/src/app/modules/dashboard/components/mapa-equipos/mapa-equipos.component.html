@@ -1,42 +1,44 @@
-<div class="container-fluid" style="width:{{tamanio_map.ancho}}px; height:{{tamanio_map.alto}}px;">
-    <div class="marcador-mapa" *ngFor="let point of map_points" style="top:{{point.py}}px;right:{{point.px}}px;"
-    placement="top" triggers="mouseenter:mouseleave"
-    ngbPopover="ID: {{point.equipo}}" popoverTitle="Equipo">
-        <img class="col-12" src="assets/img/marcador1.png" />
-    </div>
-    <div class="row disable-select">
-        <div class="col p-0"><img class="col-12" src="assets/img/m1.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m2.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m3.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m4.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m5.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m6.png"/></div>
-    </div>
-
-    <div class="row disable-select">
-        <div class="col p-0"><img class="col-12" src="assets/img/m7.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m8.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m9.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m10.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m11.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m12.png"/></div>
-    </div>
-
-    <div class="row disable-select">
-        <div class="col p-0"><img class="col-12" src="assets/img/m13.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m14.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m15.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m16.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m17.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m18.png"/></div>
-    </div>
-
-    <div class="row disable-select">
-        <div class="col p-0"><img class="col-12" src="assets/img/m19.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m20.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m21.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m22.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m23.png"/></div>
-        <div class="col p-0"><img class="col-12" src="assets/img/m24.png"/></div>
+<div class="fluid-container">
+    <div style="width:{{tamanio_map.ancho}}px; height:{{tamanio_map.alto}}px;position:relative;">
+        <div class="marcador-mapa" *ngFor="let point of map_points" style="top:{{point.py}}px;right:{{point.px}}px;"
+        placement="top" triggers="mouseenter:mouseleave"
+        ngbPopover="ID: {{point.equipo}}" popoverTitle="Equipo">
+            <img class="col-12" src="assets/img/marcador1.png" />
+        </div>
+        <div class="row disable-select">
+            <div class="col p-0"><img class="col-12" src="assets/img/m1.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m2.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m3.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m4.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m5.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m6.png"/></div>
+        </div>
+    
+        <div class="row disable-select">
+            <div class="col p-0"><img class="col-12" src="assets/img/m7.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m8.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m9.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m10.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m11.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m12.png"/></div>
+        </div>
+    
+        <div class="row disable-select">
+            <div class="col p-0"><img class="col-12" src="assets/img/m13.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m14.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m15.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m16.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m17.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m18.png"/></div>
+        </div>
+    
+        <div class="row disable-select">
+            <div class="col p-0"><img class="col-12" src="assets/img/m19.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m20.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m21.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m22.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m23.png"/></div>
+            <div class="col p-0"><img class="col-12" src="assets/img/m24.png"/></div>
+        </div>
     </div>
 </div>

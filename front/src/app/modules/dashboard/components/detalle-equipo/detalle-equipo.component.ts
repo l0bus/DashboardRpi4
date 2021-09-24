@@ -29,6 +29,7 @@ export class DetalleEquipoComponent implements OnInit {
   private applyFilters:any = null;
   private applyFiltersClick:any = null;
   private formIsValidated:any = null;
+  private btnClick:boolean = false;
   
   public chart: Chart = new Chart({
     chart: {
@@ -72,6 +73,7 @@ export class DetalleEquipoComponent implements OnInit {
   }
 
   initDataForEquipo(){
+    this.btnClick = false;
     this.equipoSelect.model = this.dashboardService.paramsDetalleEquipo.id;
     this.formConfig.model.equipo_id = this.dashboardService.paramsDetalleEquipo.id;
   }
@@ -115,6 +117,7 @@ export class DetalleEquipoComponent implements OnInit {
     
     //BOTON APLICAR
     this.applyFiltersClick = this.applyFilters.onClick.subscribe({  next: ( params: any ) => {
+      this.btnClick = true;
       this.formConfig.validateForm.next();
     } });
 
@@ -156,7 +159,8 @@ export class DetalleEquipoComponent implements OnInit {
         data: serie
       } as any,true,true);
     } else {
-      this.appUIUtilsService.showMessage('No se obtuvieron datos, en el intervalo de tiempo especificado.');
+      //if (this.btnClick)
+      //this.appUIUtilsService.showMessage('No se obtuvieron datos, en el intervalo de tiempo especificado.');
     }
   }
 
@@ -204,6 +208,7 @@ export class DetalleEquipoComponent implements OnInit {
     this.formIsValidated.unsubscribe();
     this.GetALOKSubj.unsubscribe();
     this.GetALESubj.unsubscribe();
+    this.btnClick = false;
   }
 
 }
