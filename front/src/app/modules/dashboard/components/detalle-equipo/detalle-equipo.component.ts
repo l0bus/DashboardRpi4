@@ -9,7 +9,6 @@ import { FiltroEstadisticaForm } from '../../models/FiltroEstadisticaForm';
 import { CamposLogService } from '../../services/campos.log.service';
 import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
 import { APIResponse } from '../../models/APIResponse';
-import { LogEquipoRegService } from '../../services/log-equipo-reg.service';
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -59,7 +58,6 @@ export class DetalleEquipoComponent implements OnInit {
   constructor(
     public dashboardService:     DashboardService,
     public logEquipoService:     LogEquipoService,
-    private logEquipoRegService: LogEquipoRegService,
     private camposLogService:    CamposLogService,
     private appUIUtilsService:   AppUIUtilsService
   ) {
