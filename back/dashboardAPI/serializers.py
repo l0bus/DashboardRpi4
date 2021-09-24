@@ -34,15 +34,14 @@ class EquiposSerializer(serializers.ModelSerializer):
             'created_at'
         ]
 
-class LogEquipoRegSerializer(serializers.ModelSerializer):
-    #log_equipo_reg = LogEquipoDataSerializer(read_only=True, many=True)
-    class Meta:
-        model = LogEquipoReg
-        fields = "__all__"
-
 class LogEquipoDataSerializer(serializers.ModelSerializer):
-    key_code = serializers.ReadOnlyField()
-    log_equipo_reg = LogEquipoRegSerializer(read_only=True, many=True)
+    key = CamposLogSerializer()
     class Meta:
         model = LogEquipoData
-        fields = ['id','key_code','log_equipo_reg','key','value','created_at']
+        fields = ['id','key','value','created_at', 'log_equipo_reg_id']
+
+class LogEquipoRegSerializer(serializers.ModelSerializer):
+    log_equipo_data = LogEquipoDataSerializer(read_only = True, many = True)
+    class Meta:
+        model = LogEquipoReg
+        fields = ['id', 'file_path', 'equipo', 'fecha_registro', 'log_equipo_data']

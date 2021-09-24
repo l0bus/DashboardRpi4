@@ -66,8 +66,8 @@ class DBLogInserter:
         log_reg_data.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_reg_data.key = CamposLog.objects.get(id = key_id)
         log_reg_data.value = value
+        log_reg_data.log_equipo_reg = inser_log_reg
         log_reg_data.save()
-        log_reg_data.log_equipo_reg.set([inser_log_reg])
         return log_reg_data
 
     def insert_log_equipo_reg(self, idEquipo):
