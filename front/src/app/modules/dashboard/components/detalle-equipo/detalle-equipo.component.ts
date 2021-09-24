@@ -100,7 +100,7 @@ export class DetalleEquipoComponent implements OnInit {
       
     this.formConfig.AddElement( new FieldBootstrapFormConfig(
         { title:'Fecha Final:', field: 'date_end', type: 'date',
-          validator: new BootstrapFormRequired( { extraValidator: new BootstrapFormDate({ max: new Date() }) } )
+          validator: new BootstrapFormRequired()
         } ) );
 
     this.applyFilters = new ButtonBootstrapFormConfig( { title:'Aplicar', type: 'button' } );
@@ -117,11 +117,11 @@ export class DetalleEquipoComponent implements OnInit {
     this.formIsValidated = this.formConfig.isValidated.subscribe({  next: ( params: any ) => {
       if ( params.success == true ){
         //Esta todo OK, se puede hacer peticiòn para consultar datos
-        let url_p = '?log_equipo_reg__equipo='+this.formConfig.model.equipo_id+
-                    '&log_equipo_reg__fecha_registro__gte='+this.formConfig.model.date_start+' 00:00:00.000000'+
-                    '&log_equipo_reg__fecha_registro__lte='+this.formConfig.model.date_end+' 00:00:00.000000'+
-                    '&key='+this.formConfig.model.key_id;
-        this.logEquipoRegService.getAll(url_p);
+        let url_p = '?equipo='+this.formConfig.model.equipo_id+
+                    '&fecha_registro__gte='+this.formConfig.model.date_start+' 00:00:00.000000'+
+                    '&fecha_registro__lte='+this.formConfig.model.date_end+' 00:00:00.000000'+
+                    '&log_equipo_data__key__id='+this.formConfig.model.key_id;
+        this.logEquipoService.getAll(url_p);
         this.appUIUtilsService.presentLoading();
       } else {
         this.appUIUtilsService.showMessage( this.appUIUtilsService.getMessageFErrors( params.errors ) );
@@ -130,16 +130,25 @@ export class DetalleEquipoComponent implements OnInit {
   }
 
   updateChart(response:any){
+    console.log(response);
     if (response.length > 0){
       this.chart.removeSeries(0);
+      let serieName = '';
       let serie:any = [];
 
+      //se recorren los datos del registro para obtrener los valores pa el grafico
       for (let c=0; c < response.length; c++){
-        serie.push(Number(response[c].value));
+        for(let i=0; i < response[c].log_equipo_data.length; i++){
+          if (response[c].log_equipo_data[i].key.id == this.filterParams.key_id){
+            serie.push(Number(response[c].log_equipo_data[i].value));
+            serieName = response[c].log_equipo_data[i].key.cod;
+            break;
+          }
+        }
       }
 
       this.chart.addSeries({
-        name: response[0].key_code,
+        name: serieName,
         data: serie
       } as any,true,true);
     } else {
@@ -166,19 +175,19 @@ export class DetalleEquipoComponent implements OnInit {
     } });
 
     //LOGS
-    this.GetALOKSubj = this.logEquipoRegService.GetAllOK.subscribe({  next: ( response: any ) => {
+    this.GetALOKSubj = this.logEquipoService.GetAllOK.subscribe({  next: ( response: any ) => {
       this.appUIUtilsService.dismissLoading();
       this.updateChart(response);
     } });
 
-    this.GetALESubj = this.logEquipoRegService.GetAllE.subscribe({  next: ( params: any ) => {
+    this.GetALESubj = this.logEquipoService.GetAllE.subscribe({  next: ( params: any ) => {
         this.appUIUtilsService.dismissLoading();
         this.appUIUtilsService.showMessage('Ocurrió un error, no se pudo obtener el listado de logs.');
     } });
   }
 
   ngOnDestroy(){
-    this.equipoSelectChange.unsubscribe();
+    if (this.equipoSelectChange != null){ this.equipoSelectChange.unsubscribe(); }
     this.applyFiltersClick.unsubscribe();
     this.GetACOKSubj.unsubscribe();
     this.GetACESubj.unsubscribe();

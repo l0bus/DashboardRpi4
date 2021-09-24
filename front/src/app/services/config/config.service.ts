@@ -8,7 +8,7 @@ export class ConfigService {
 
   public getConfigData(){
     return {
-      apiBaseUrl: "https://estadisticas1.api.greenborn.com.ar/",//"http://localhost:8000/"
+      apiBaseUrl: "http://localhost:8000/",//"https://estadisticas1.api.greenborn.com.ar/",//"http://localhost:8000/"
       loginAction:"api-token-auth/",
       equiposAction:"equipo",
       logEquipoAction:"log_equipo",
