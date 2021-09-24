@@ -1,11 +1,10 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
 import { APIResponse } from '../../models/APIResponse';
 import { DashboardService } from '../../services/dashboard.service';
 import { EquiposService } from '../../services/equipos.service';
 import { LogEquipoService } from '../../services/log-equipo.service';
-
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-mapa-equipos',
   templateUrl: './mapa-equipos.component.html',
@@ -29,7 +28,7 @@ export class MapaEquiposComponent implements OnInit {
   private cc_regs:any = [];
 
   private cc_esquinaSuperiorDer = { lat:-16.488679, lng: -71.521014 }
-  private tamanio_map = { ancho:1536, alto: 1024, alto_lng: 0.131461, ancho_lat: 0.084078 };
+  public tamanio_map = { ancho:1536, alto: 1024, alto_lng: 0.131461, ancho_lat: 0.084078 };
   private marquer_size = {x:50,y:65};
 
   public map_points:any = []
@@ -50,6 +49,7 @@ export class MapaEquiposComponent implements OnInit {
     let point:any = {
       py: (this.cc_esquinaSuperiorDer.lng - longitud) / (this.tamanio_map.alto_lng / this.tamanio_map.alto), 
       px: (this.cc_esquinaSuperiorDer.lat - latitud) / (this.tamanio_map.ancho_lat / this.tamanio_map.ancho) - this.marquer_size.x*1.5,
+      equipo: this.getValueOf(params.log_equipo_data,'ID'),
       data: params
     };
     this.map_points.push(point);

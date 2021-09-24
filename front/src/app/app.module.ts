@@ -3,7 +3,7 @@ import { NgModule }      from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent }     from './app.component';
-import { NgbModule, NgbNavModule }        from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbNavModule, NgbPopoverModule }        from '@ng-bootstrap/ng-bootstrap';
 import { ChartModule } from 'angular-highcharts';
 
 
@@ -30,7 +30,7 @@ import { MessageComponent } from './modules/AppUIUtils/components/message/messag
     AppUIUtilsModule,
     ReactiveFormsModule,
     ChartModule,
-    NgbModule, 
+    NgbModule,NgbPopoverModule,
     NgbNavModule
   ],
   providers: [],
