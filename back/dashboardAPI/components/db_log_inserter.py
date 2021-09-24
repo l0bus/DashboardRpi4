@@ -70,10 +70,10 @@ class DBLogInserter:
         log_reg_data.save()
         return log_reg_data
 
-    def insert_log_equipo_reg(self, idEquipo):
+    def insert_log_equipo_reg(self, idEquipo, dateTime):
         log_equipo_reg = LogEquipoReg()
         log_equipo_reg.equipo = Equipos.objects.get(id = idEquipo)
-        log_equipo_reg.fecha_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_equipo_reg.fecha_registro = dateTime
         log_equipo_reg.file_path = self.filePath
         log_equipo_reg.save()
         return log_equipo_reg
@@ -97,8 +97,11 @@ class DBLogInserter:
         else:
             equipo_id = equipo[0].id
 
+        #Se obtine la fechay hora del registro
+        dateTime = datetime.strptime(row[self.fields['FECHA_HORA_SIS\\r\\n']],"%d/%m/%y %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
+
         #Se agrega un nuevo registro correspondiente a una entrada de log (Se agregarìa un registro en esta tabla por cada registro en el archivo de logs)
-        inser_log_reg = self.insert_log_equipo_reg( equipo_id )
+        inser_log_reg = self.insert_log_equipo_reg( equipo_id, dateTime )
 
         count = 0
         for cell in row:
