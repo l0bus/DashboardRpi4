@@ -41,7 +41,7 @@ export class MapaEquiposComponent implements OnInit {
   }
 
   addMapPoint(params){
-    console.log(params)
+    if (params == undefined) return;
     this.cc_regs.push(params);
     let latitud:any  = this.getCCLatValueOfString(this.getValueOf(params.log_equipo_data,'LATITUD'));
     let longitud:any = this.getCCLngValueOfString(this.getValueOf(params.log_equipo_data,'LONGITUD'));
@@ -84,7 +84,7 @@ export class MapaEquiposComponent implements OnInit {
   requestLastLog(){
     this.appUIUtilsService.presentLoading();
     for (let c=0; c < this.listadoEquipos.length;c++){
-      let params = '?id_equipo='+this.listadoEquipos[c].id+'&ordering=-id&limit=1';
+      let params = '?equipo='+this.listadoEquipos[c].id+'&ordering=-id&limit=1';
       this.logEquipoService.getAll(params);
     }
   }
