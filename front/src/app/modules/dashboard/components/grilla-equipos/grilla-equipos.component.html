@@ -1,16 +1,38 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-12 col-sm-5 col-md-4 col-lg-3" *ngFor="let equipo of listadoEquipos">
-            <div class="card">
-                <div class="card-body">
-                    <h3>{{equipo.cod}}</h3>
-                    <p><b>id:</b>{{equipo.id}}</p>
-                    <p>{{equipo.descripcion}}</p>
-                    <button type="button" class="btn btn-info" (click)="detalles(equipo)">Detalles</button>
-                </div>
-            </div>
-        </div>
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel *ngFor="tipoe of listadoTipoEquipos; let i = index" id="toggle-{{i}}" >
+                <ng-template ngbPanelTitle>
+                    <button type="button" class="btn btn-secondary">{{listadoTipoEquipos[i].cod}} {{listadoTipoEquipos[i].nombre}}</button>
+                </ng-template>
+
+                <ng-template ngbPanelContent>
+                    
+                    <div class="row">
+
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3 mb-4" *ngFor="let equipo of listadoTipoEquipos[i].equipos">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3>{{equipo.cod}}</h3>
+                                    <p><b>id:</b>{{equipo.id}}</p>
+                                    <p>{{equipo.descripcion}}</p>
+                                    <button type="button" class="btn btn-info" (click)="detalles(equipo)">Detalles</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="col col-12 col-md-10 offset-md-1" *ngIf="listadoTipoEquipos[i].equipos.length == 0">
+                            <div class="alert alert-warning" role="alert">
+                                No se encontraron datos de equipos.
+                            </div>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
 
     </div>
 </div>
