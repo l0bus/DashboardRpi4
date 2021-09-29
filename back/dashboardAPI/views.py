@@ -34,7 +34,7 @@ class CamposLogViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 class TipoEquiposViewSet(viewsets.ModelViewSet):
-    queryset = TipoEquipos.objects.all()
+    queryset = TipoEquipos.objects.prefetch_related('equipos').all()
     serializer_class = TipoEquiposSerializer
     permission_classes = [permissions.IsAuthenticated]
 

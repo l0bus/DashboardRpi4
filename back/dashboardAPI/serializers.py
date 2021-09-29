@@ -14,15 +14,6 @@ class CamposLogSerializer(serializers.ModelSerializer):
             'cod',
         ]
 
-class TipoEquiposSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TipoEquipos
-        fields = [
-            'id',
-            'nombre',
-            'cod',
-        ]
-
 class EquiposSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipos
@@ -32,6 +23,17 @@ class EquiposSerializer(serializers.ModelSerializer):
             'cod',
             'tipo',
             'created_at'
+        ]
+
+class TipoEquiposSerializer(serializers.ModelSerializer):
+    equipos = EquiposSerializer(read_only = True, many = True)
+    class Meta:
+        model = TipoEquipos
+        fields = [
+            'id',
+            'nombre',
+            'cod',
+            'equipos'
         ]
 
 class LogEquipoDataSerializer(serializers.ModelSerializer):
