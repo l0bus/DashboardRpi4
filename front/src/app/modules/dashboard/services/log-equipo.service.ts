@@ -29,11 +29,11 @@ export class LogEquipoService {
   public GetAllOK = new Subject();
   public GetAllE = new Subject();
 
-  getAll( expand:string = '' ){
+  getAll( expand:string = '', addToResponseAttr:any = {} ){
 
     this.http.get(this.action.apiUrl + this.action.url + expand ).subscribe(
-        data => {  this.GetAllOK.next(data); },
-        err =>  {  this.GetAllE.next(err);  }
+        data => {  this.GetAllOK.next({data:data, attrAdded:addToResponseAttr}); },
+        err =>  {  this.GetAllE.next({data:err, attrAdded:addToResponseAttr});  }
       );
   }
 
