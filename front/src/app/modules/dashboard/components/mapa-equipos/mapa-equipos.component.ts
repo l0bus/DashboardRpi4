@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
 import { APIResponse } from '../../models/APIResponse';
 import { DashboardService } from '../../services/dashboard.service';
@@ -31,21 +31,35 @@ export class MapaEquiposComponent implements OnInit {
   public tamanio_map = { ancho:1536, alto: 1024, alto_lng: 0.131461, ancho_lat: 0.084078 };
   private marquer_size = {x:50,y:65};
 
-  public map_points:any = []
+  public map_points:any = [];
+
+  @Input() pointConfig:any = { points:[], auto:true, updateSubj:null};
+  private updSubj:any = null;
 
   ngOnInit(): void {
-    this.setSubsEvents();
-    this.appUIUtilsService.presentLoading();
-    //se piden el listado de equipos
-    this.equiposService.getAll('?limit=200');
-
-    //Se vuelve a realizar la peticion cada 10 segundos, lo cual serìa el intervalo de actualizaciòn del mapa
-    setTimeout(()=>{
-      this.cc_regs = [];
-      this.listadoEquipos = [];
-      this.map_points = [];
+    if(this.pointConfig.auto){
+      this.setSubsEvents();
+      this.appUIUtilsService.presentLoading();
+      //se piden el listado de equipos
       this.equiposService.getAll('?limit=200');
-    },10000);
+
+      //Se vuelve a realizar la peticion cada 10 segundos, lo cual serìa el intervalo de actualizaciòn del mapa
+      setTimeout(()=>{
+        this.cc_regs = [];
+        this.listadoEquipos = [];
+        this.map_points = [];
+        this.equiposService.getAll('?limit=200');
+      },10000);
+    } else {
+      this.updSubj = this.pointConfig.updateSubj.subscribe({  next: ( response: any ) => {
+        this.cc_regs = [];
+        this.listadoEquipos = [];
+        this.map_points = [];
+        for (let c=0; c < this.pointConfig.points.length; c++){
+          this.addMapPoint(this.pointConfig.points[c]);
+        }
+      } });
+    }
   }
 
   addMapPoint(params){
@@ -125,10 +139,11 @@ export class MapaEquiposComponent implements OnInit {
   }
 
   unSetRequestsSubscriptions():void {
-    this.GetAOKSubj.unsubscribe();
-    this.GetAESubj.unsubscribe();
-    this.GetALOKSubj.unsubscribe();
-    this.getALESubj.unsubscribe();
+    if (this.GetAOKSubj != null){this.GetAOKSubj.unsubscribe();}
+    if (this.updSubj != null){this.updSubj.unsubscribe();}
+    if(this.GetAESubj != null){this.GetAESubj.unsubscribe();}
+    if(this.GetALOKSubj != null){this.GetALOKSubj.unsubscribe();}
+    if(this.getALESubj != null){this.getALESubj.unsubscribe();}
   }
 
   ngOnDestroy(){

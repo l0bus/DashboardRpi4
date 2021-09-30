@@ -9,7 +9,7 @@ import { FiltroEstadisticaForm } from '../../models/FiltroEstadisticaForm';
 import { CamposLogService } from '../../services/campos.log.service';
 import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
 import { APIResponse } from '../../models/APIResponse';
-import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -57,6 +57,7 @@ export class DetalleEquipoComponent implements OnInit {
     },
    
   }  as any);
+  public equipoPoint:any = {points:[], updateSubj:new Subject(), auto:false};
 
   constructor(
     public dashboardService:     DashboardService,
@@ -212,6 +213,8 @@ export class DetalleEquipoComponent implements OnInit {
       } else {
         if (response.data.results.length > 0){
           this.lastData = response.data.results[0].log_equipo_data;
+          this.equipoPoint.points = [response.data.results[0]];
+          this.equipoPoint.updateSubj.next();
         }
       }
     } });
