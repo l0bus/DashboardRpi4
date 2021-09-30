@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-    <div class="{{config.elementContentClass}} form-group" *ngFor="let element of config.elements; index as ii">
+    <div *ngFor="let element of config.elements; index as ii"  class="{{element.extraClass}} form-group">
       <label for="{{element.field}}"
               *ngIf="element !== undefined && element.isElementType('field') && !element.isType( 'checkbox' )">{{element.getTitle()}}</label>
       <input type="{{element.type}}" id="{{element.field}}" aria-describedby="emailHelp"

@@ -136,6 +136,10 @@ export class BootstrapFormElement {
       if ( p.hasOwnProperty( 'smallHelpText' ) ){
         this.smallHelpText = p.smallHelpText;
       }
+
+      if ( p.hasOwnProperty( 'extraClass' ) ){
+        this.extraClass = p.extraClass;
+      }
   }
 
   getTitle(){
