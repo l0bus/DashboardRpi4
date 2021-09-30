@@ -6,4 +6,10 @@
     -ms-user-select: none;      
     user-select: none;
     pointer-events: none;
-  }
+}
+
+.nav-tabs .nav-link.active {
+    border-top-color: #28a745;
+    border-top-width: 4px;
+}
+

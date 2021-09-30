@@ -274,7 +274,7 @@ export class ButtonBootstrapFormConfig extends BootstrapFormElement {
     super( p );
 
     this.elementType = 'button';
-    this.extraClass  = 'btn-outline-info';
+    this.btnClass  = 'btn-outline-info';
 
     if ( p.hasOwnProperty( 'iconClass' ) ){
       this.iconClass = p.iconClass;

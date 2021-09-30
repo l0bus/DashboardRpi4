@@ -38,6 +38,14 @@ export class MapaEquiposComponent implements OnInit {
     this.appUIUtilsService.presentLoading();
     //se piden el listado de equipos
     this.equiposService.getAll('?limit=200');
+
+    //Se vuelve a realizar la peticion cada 10 segundos, lo cual serìa el intervalo de actualizaciòn del mapa
+    setTimeout(()=>{
+      this.cc_regs = [];
+      this.listadoEquipos = [];
+      this.map_points = [];
+      this.equiposService.getAll('?limit=200');
+    },10000);
   }
 
   addMapPoint(params){

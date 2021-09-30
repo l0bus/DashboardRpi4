@@ -122,7 +122,7 @@ export class DetalleEquipoComponent implements OnInit {
           validator: new BootstrapFormRequired()
         } ) );
 
-    this.applyFilters = new ButtonBootstrapFormConfig( { title:'Aplicar', type: 'button' } );
+    this.applyFilters = new ButtonBootstrapFormConfig( { title:'Aplicar', type: 'button','extraClass':'col-auto' } );
     this.formConfig.AddElement( this.applyFilters );
 
     //EVENTOS DEL FORMULARIO

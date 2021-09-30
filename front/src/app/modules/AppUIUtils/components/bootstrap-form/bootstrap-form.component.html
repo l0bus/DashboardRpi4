@@ -23,7 +23,7 @@
               (click)="elementOnClik( element )"
               (change)="elementOnChange( element, $event )">
 
-      <button class="btn {{element.getExtraClass()}}" style="margin-top: 2em;"
+      <button class="btn {{element.btnClass}}" style="margin-top: 1.5em;"
               (click)="elementOnClik( element )"
               (change)="elementOnChange( element )"
               *ngIf="element !== undefined && element.isElementType('button') && element.isVisible() && element.isInputType()">{{element.getTitle()}}</button>
