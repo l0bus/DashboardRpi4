@@ -105,9 +105,9 @@ export class MapaEquiposComponent implements OnInit {
     } });
 
     //LOGS_EQUIPOS
-    this.GetALOKSubj = this.logEquipoService.GetAllOK.subscribe({  next: ( response: APIResponse ) => {
+    this.GetALOKSubj = this.logEquipoService.GetAllOK.subscribe({  next: ( response: any ) => {
       this.appUIUtilsService.dismissLoading();
-      this.addMapPoint(response.results[0]);
+      this.addMapPoint(response.data.results[0]);
     } });
 
     this.getALESubj = this.logEquipoService.GetAllE.subscribe({  next: ( params: any ) => {
