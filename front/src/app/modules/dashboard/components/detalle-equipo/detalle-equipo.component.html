@@ -12,19 +12,41 @@
     </div>
 
     <div class="row">
-        <div class="col">
+        <div class="col-12 col-lg-2">
     
             <app-bootstrap-form [config]="formConfig"></app-bootstrap-form>
     
         </div>
-    </div>
-    
-    <div class="row" *ngIf="!noData">
-        <div class="col">
+
+        <div class="col-12 col-lg-10" *ngIf="!noData">
     
             <div [chart]="chart"></div>
     
         </div>
+    </div>
+
+    <div class="row" *ngIf="lastData.length > 0">
+        <div class="col text-center">
+            <h4>Últimos datos</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+
+                <div class="col p-0" *ngFor="let reg of lastData; let i = index">
+                    <div class="card">
+                        <h5 class="card-header">{{reg.key.cod}}</h5>
+                        <div class="card-body">
+                          <span class="card-title">{{reg.value}}</span>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
     </div>
 </div>
 

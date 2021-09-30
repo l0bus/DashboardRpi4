@@ -9,6 +9,7 @@ import { FiltroEstadisticaForm } from '../../models/FiltroEstadisticaForm';
 import { CamposLogService } from '../../services/campos.log.service';
 import { AppUIUtilsService } from 'src/app/modules/AppUIUtils/services/app.ui.utils.service';
 import { APIResponse } from '../../models/APIResponse';
+import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -24,6 +25,7 @@ export class DetalleEquipoComponent implements OnInit {
 
   private equipoSelect:any = null;
   private equipoSelectChange:any = null;
+  public lastData:any = [];
 
   private keySelect:any = null;
   private applyFilters:any = null;
@@ -69,7 +71,17 @@ export class DetalleEquipoComponent implements OnInit {
     this.setFormConfig();
     this.setSubsEvents();
     this.initDataForEquipo();
+    //Obtenciòn de las variables
     this.camposLogService.getAll('?limit=1000');
+    //Obtensiòn de los ùltimos logs del equipo
+    if(!this.noData){
+      this.getUltimosDatos( this.filterParams.equipo_id );
+    }
+  }
+
+  getUltimosDatos(idEquipo){
+    let params = '?equipo='+idEquipo+'&ordering=-id&limit=1';
+    this.logEquipoService.getAll(params,{ref:"toGrid"});
   }
 
   initDataForEquipo(){
@@ -86,7 +98,7 @@ export class DetalleEquipoComponent implements OnInit {
 
     this.equipoSelect = new FieldBootstrapFormConfig(
       { title:'Equipo:', field: 'equipo_id', type: 'select',
-        validator: new BootstrapFormRequired(),
+        validator: new BootstrapFormRequired(), 'extraClass':'col-auto',
         smallHelpText:'Luego de seleccionar un Equipo, seleccione una variable.',
         originDataSubject:this.dashboardService.dataForSelectEquipos, provider: this.dashboardService, getDataFunction:'getEquiposSelect'
       } );
@@ -94,19 +106,19 @@ export class DetalleEquipoComponent implements OnInit {
 
     this.keySelect = new FieldBootstrapFormConfig(
       { title:'Variable:', field: 'key_id', type: 'select',
-          validator: new BootstrapFormRequired(),
+          validator: new BootstrapFormRequired(),'extraClass':'col-auto',
           smallHelpText:'Al seleccionar una variable, debe especificar el lapso de tiempo',
           originDataSubject:this.dashboardService.dataForSelectKeys, provider: this.dashboardService, getDataFunction:'getListadoKeysSelect'
       } );
     this.formConfig.AddElement( this.keySelect );
 
     this.formConfig.AddElement( new FieldBootstrapFormConfig(
-        { title:'Fecha Inicial:', field: 'date_start', type: 'date',
+        { title:'Fecha Inicial:', field: 'date_start', type: 'date','extraClass':'col-auto',
           validator: new BootstrapFormRequired( { extraValidator: new BootstrapFormDate({ max: new Date() }) } )
         } ) );
       
     this.formConfig.AddElement( new FieldBootstrapFormConfig(
-        { title:'Fecha Final:', field: 'date_end', type: 'date',
+        { title:'Fecha Final:', field: 'date_end', type: 'date','extraClass':'col-auto',
           validator: new BootstrapFormRequired()
         } ) );
 
@@ -114,7 +126,11 @@ export class DetalleEquipoComponent implements OnInit {
     this.formConfig.AddElement( this.applyFilters );
 
     //EVENTOS DEL FORMULARIO
-    
+
+    this.equipoSelectChange = this.equipoSelect.onChange.subscribe({  next: ( params: any ) => {
+      this.getUltimosDatos( this.filterParams.equipo_id );
+    } });
+
     //BOTON APLICAR
     this.applyFiltersClick = this.applyFilters.onClick.subscribe({  next: ( params: any ) => {
       this.btnClick = true;
@@ -129,7 +145,7 @@ export class DetalleEquipoComponent implements OnInit {
                     '&fecha_registro__gte='+this.formConfig.model.date_start+' 00:00:00.000000'+
                     '&fecha_registro__lte='+this.formConfig.model.date_end+' 00:00:00.000000'+
                     '&log_equipo_data__key__id='+this.formConfig.model.key_id;
-        this.logEquipoService.getAll(url_p);
+        this.logEquipoService.getAll(url_p,{ref:"toGraph"});
         this.appUIUtilsService.presentLoading();
       } else {
         this.appUIUtilsService.showMessage( this.appUIUtilsService.getMessageFErrors( params.errors ) );
@@ -191,7 +207,13 @@ export class DetalleEquipoComponent implements OnInit {
     //LOGS
     this.GetALOKSubj = this.logEquipoService.GetAllOK.subscribe({  next: ( response: any ) => {
       this.appUIUtilsService.dismissLoading();
-      this.updateChart(response);
+      if (response.attrAdded.ref == "toGraph"){
+        this.updateChart(response.data);
+      } else {
+        if (response.data.results.length > 0){
+          this.lastData = response.data.results[0].log_equipo_data;
+        }
+      }
     } });
 
     this.GetALESubj = this.logEquipoService.GetAllE.subscribe({  next: ( params: any ) => {
